@@ -1,0 +1,92 @@
+.sidebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(var(--pixel-size) * 2) calc(var(--pixel-size) * 4);
+  background: var(--primary-background);
+  border-bottom: 2px solid var(--secondary-background);
+}
+
+.tabsContainer {
+  display: flex;
+  gap: calc(var(--pixel-size) * 4);
+}
+
+.walletContainer {
+  display: flex;
+  gap: calc(var(--pixel-size) * 2);
+  align-items: center;
+}
+
+.tab {
+  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
+  cursor: pointer;
+  font-size: calc(var(--pixel-size) * 2);
+  border-radius: calc(var(--pixel-size) * 0.5);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tab:hover {
+  background: var(--cell-background);
+}
+
+.tab.active {
+  background: var(--secondary-background);
+  color: white;
+}
+
+.connectButton {
+  background: linear-gradient(to right, #cae329, #c84419);
+  color: white;
+  border: none;
+  border-radius: calc(var(--pixel-size) * 1);
+  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
+  font-size: calc(var(--pixel-size) * 1.75);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+}
+
+.airdropButton {
+  background: linear-gradient(to right, #4237da, #6f4ec9);
+  color: white;
+  border: none;
+  border-radius: calc(var(--pixel-size) * 1);
+  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
+  font-size: calc(var(--pixel-size) * 1.75);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+}
+
+.airdropButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.connectButton:hover,
+.airdropButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.walletInfo {
+  font-size: calc(var(--pixel-size) * 1.75);
+  color: var(--primary-text-color);
+  background: rgba(78, 68, 206, 0.1);
+  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
+  border-radius: calc(var(--pixel-size) * 1);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--pixel-size) * 1);
+}
+
+.walletAddress {
+  max-width: calc(var(--pixel-size) * 20);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

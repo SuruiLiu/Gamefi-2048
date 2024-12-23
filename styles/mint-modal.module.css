@@ -1,0 +1,90 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: calc(var(--pixel-size) * 1);
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(var(--pixel-size) * 2);
+  border-bottom: 1px solid #eee;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: calc(var(--pixel-size) * 2);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: calc(var(--pixel-size) * 3);
+  cursor: pointer;
+  color: #666;
+}
+
+.modalContent {
+  padding: calc(var(--pixel-size) * 2);
+}
+
+.buttonContainer {
+  display: flex;
+  gap: calc(var(--pixel-size) * 1);
+  margin-top: calc(var(--pixel-size) * 2);
+}
+
+.mintButton {
+  flex: 1;
+  background: linear-gradient(to right, #4e44ce, #6f4ec9);
+  color: white;
+  border: none;
+  border-radius: calc(var(--pixel-size) * 1);
+  padding: calc(var(--pixel-size) * 1.5);
+  font-size: calc(var(--pixel-size) * 1.75);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelButton {
+  flex: 1;
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: calc(var(--pixel-size) * 1);
+  padding: calc(var(--pixel-size) * 1.5);
+  font-size: calc(var(--pixel-size) * 1.75);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mintButton:disabled,
+.cancelButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mintButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cancelButton:hover:not(:disabled) {
+  background: #eee;
+} 

@@ -1,0 +1,79 @@
+.board {
+  position: relative;
+  width: calc(var(--pixel-size) * 8 * 4 + var(--pixel-size) * 5);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  background: var(--secondary-background);
+  border: calc(var(--pixel-size) * 0.5) solid var(--secondary-background);
+  border-radius: calc(var(--pixel-size) * 0.75);
+}
+
+.cell {
+  width: calc(var(--pixel-size) * 8);
+  height: calc(var(--pixel-size) * 8);
+  margin: calc(var(--pixel-size) * 0.5);
+  border-radius: calc(var(--pixel-size) * 0.5);
+  background: var(--cell-background);
+}
+
+.tiles {
+  position: absolute;
+  z-index: 2;
+  margin: calc(var(--pixel-size) * 0.5);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media (min-width: 512px) {
+  .board {
+    width: calc(var(--pixel-size) * 12.5 * 4 + var(--pixel-size) * 10);
+  }
+
+  .grid {
+    border: calc(var(--pixel-size) * 1) solid var(--secondary-background);
+  }
+
+  .cell {
+    width: calc(var(--pixel-size) * 12.5);
+    height: calc(var(--pixel-size) * 12.5);
+    margin: calc(var(--pixel-size) * 1);
+  }
+
+  .tiles {
+    margin: calc(var(--pixel-size) * 1);
+  }
+}
+
+.endGameButton {
+  position: relative; /* 确保 z-index 生效 */
+  z-index: 10; /* 提升按钮的层级 */
+  margin-top: calc(var(--pixel-size) * 2);
+  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
+  background: var(--button-background);
+  color: white;
+  border: none;
+  border-radius: calc(var(--pixel-size) * 0.5);
+  font-size: calc(var(--pixel-size) * 2);
+  cursor: pointer; /* 确保 hover 状态变为小手 */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 120px;
+  text-align: center;
+  user-select: none;
+  transition: opacity 0.2s ease;
+  display: inline-block; /* 确保整个按钮区域都可点击 */
+}
+
+.endGameButton:hover {
+  opacity: 0.8; /* 添加一个 hover 效果用于测试 */
+}
+
+.endGameButton:hover {
+  opacity: 0.9;
+}

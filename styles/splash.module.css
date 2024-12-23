@@ -1,0 +1,68 @@
+.splash {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.content {
+  background: white;
+  padding: calc(var(--pixel-size) * 3);
+  border-radius: calc(var(--pixel-size) * 2);
+  text-align: center;
+  max-width: 80%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content h2 {
+  margin: 0 0 calc(var(--pixel-size) * 2);
+  color: #333;
+  font-size: calc(var(--pixel-size) * 3);
+  font-weight: 600;
+}
+
+.score, .time {
+  margin: calc(var(--pixel-size) * 1) 0;
+  color: #444;
+  font-size: calc(var(--pixel-size) * 2);
+  font-weight: 500;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: calc(var(--pixel-size) * 2);
+  justify-content: center;
+  margin-top: calc(var(--pixel-size) * 2);
+}
+
+.mintButton, .replayButton {
+  background: linear-gradient(to right, #4e44ce, #6f4ec9);
+  color: white;
+  border: none;
+  border-radius: calc(var(--pixel-size) * 1);
+  padding: calc(var(--pixel-size) * 1.5) calc(var(--pixel-size) * 3);
+  font-size: calc(var(--pixel-size) * 1.75);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  flex: 1;
+  max-width: 200px;
+}
+
+.replayButton {
+  background: linear-gradient(to right, #28a745, #20c997);
+}
+
+.mintButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.mintButton:hover:not(:disabled),
+.replayButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
