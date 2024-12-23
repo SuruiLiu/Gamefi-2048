@@ -1,55 +1,65 @@
 .container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 500px;
+  padding: 24px;
   position: relative;
 }
 
 .userInfo {
   background: linear-gradient(to right, #accb44, #ef8228);
-  padding: calc(var(--pixel-size) * 3);
-  border-radius: calc(var(--pixel-size) * 2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: calc(var(--pixel-size) * 4);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 32px;
 }
 
 .infoRow {
   display: flex;
   align-items: center;
-  padding: calc(var(--pixel-size) * 1.5) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 16px;
+  border-radius: 12px;
+  background: #F8F9FA;
+  margin-bottom: 12px;
 }
 
 .infoRow:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .label {
   font-weight: 500;
-  color: #fff;
-  width: 100px;
+  color: #707A83;
+  width: 120px;
 }
 
 .value {
-  color: #fff;
+  color: #04111D;
   font-family: monospace;
-  font-size: calc(var(--pixel-size) * 2);
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nftSection {
   position: relative;
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .nftSection h2 {
-  margin-bottom: calc(var(--pixel-size) * 3);
-  color: var(--primary-text-color);
+  margin: 0 0 24px 0;
+  color: #04111D;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: calc(var(--pixel-size) * 3);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
 }
 
 .loading {
@@ -66,6 +76,7 @@
   right: 0;
   bottom: 0;
   background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -75,12 +86,14 @@
 }
 
 .connectMessage {
-  background: rgba(0, 0, 0, 0.7);
+  background: #04111D;
   color: white;
   padding: 16px 32px;
-  border-radius: 8px;
-  font-size: 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
   pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .overlay ~ .nftSection {
@@ -89,15 +102,21 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 20px;
+    padding: 16px;
   }
   
   .infoRow {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
   }
   
   .label {
-    margin-bottom: calc(var(--pixel-size) * 1);
+    margin-bottom: 4px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
   }
 } 
