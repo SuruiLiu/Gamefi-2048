@@ -42,8 +42,8 @@ export default function Home() {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
-      
+      <Sidebar currentTab={activeTab} onTabChange={setActiveTab} />
+
       <div className={styles.content}>
         {renderContent()}
       </div>

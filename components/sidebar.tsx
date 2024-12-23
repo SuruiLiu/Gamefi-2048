@@ -17,8 +17,8 @@ declare global {
 }
 
 interface SidebarProps {
-  currentTab: string;
-  onTabChange: (tab: string) => void;
+  currentTab: 'game' | 'marketplace' | 'profile';
+  onTabChange: (tab: 'game' | 'marketplace' | 'profile') => void;
 }
 
 export default function Sidebar({ currentTab, onTabChange }: SidebarProps) {
