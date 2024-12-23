@@ -2,29 +2,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: calc(var(--pixel-size) * 2) calc(var(--pixel-size) * 4);
+  padding: 16px 24px;
   background: var(--primary-background);
   border-bottom: 2px solid var(--secondary-background);
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .tabsContainer {
   display: flex;
-  gap: calc(var(--pixel-size) * 4);
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 .walletContainer {
   display: flex;
-  gap: calc(var(--pixel-size) * 2);
+  gap: 16px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .tab {
-  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
+  padding: 8px 16px;
   cursor: pointer;
-  font-size: calc(var(--pixel-size) * 2);
-  border-radius: calc(var(--pixel-size) * 0.5);
+  font-size: 16px;
+  border-radius: 8px;
   transition: all 0.2s ease;
   user-select: none;
+  white-space: nowrap;
 }
 
 .tab:hover {
@@ -40,26 +45,28 @@
   background: linear-gradient(to right, #cae329, #c84419);
   color: white;
   border: none;
-  border-radius: calc(var(--pixel-size) * 1);
-  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
-  font-size: calc(var(--pixel-size) * 1.75);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .airdropButton {
   background: linear-gradient(to right, #4237da, #6f4ec9);
   color: white;
   border: none;
-  border-radius: calc(var(--pixel-size) * 1);
-  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
-  font-size: calc(var(--pixel-size) * 1.75);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .airdropButton:disabled {
@@ -74,19 +81,69 @@
 }
 
 .walletInfo {
-  font-size: calc(var(--pixel-size) * 1.75);
+  font-size: 14px;
   color: var(--primary-text-color);
   background: rgba(78, 68, 206, 0.1);
-  padding: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 2);
-  border-radius: calc(var(--pixel-size) * 1);
+  padding: 8px 16px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: calc(var(--pixel-size) * 1);
+  gap: 8px;
 }
 
 .walletAddress {
-  max-width: calc(var(--pixel-size) * 20);
+  max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    padding: 12px 16px;
+    justify-content: center;
+  }
+
+  .tabsContainer {
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
+    order: 2;
+  }
+
+  .walletContainer {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tab {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .connectButton,
+  .airdropButton {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 8px 12px;
+  }
+
+  .tabsContainer {
+    gap: 8px;
+  }
+
+  .walletContainer {
+    gap: 8px;
+  }
+
+  .tab {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
 }
