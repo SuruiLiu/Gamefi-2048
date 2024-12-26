@@ -1,30 +1,28 @@
 // lib.rs
-use game::Game;
-use web3::Web3Manager;
+pub mod game;
+pub mod bindings;
 
-mod game;
-mod web3;
-mod bindings;
+pub use game::Game;
+pub use game::Direction;
 
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error)]
 pub enum GameError {
+    #[error("Invalid move")]
     InvalidMove,
+    #[error("Game over")]
     GameOver,
-    Web3Error(String),
 }
 
 pub type Result<T> = std::result::Result<T, GameError>;
 
 pub struct GameManager {
     game: Game,
-    web3: Web3Manager,
 }
 
 impl GameManager {
     pub fn new() -> Self {
         Self {
             game: Game::new(),
-            web3: Web3Manager::new(),
         }
     }
 
@@ -48,24 +46,24 @@ impl GameManager {
         self.game.is_game_over()
     }
 
-    pub async fn mint_score_nft(&mut self) -> Result<String> {
-        if !self.game.is_game_over() {
-            return Err(GameError::InvalidMove);
-        }
+    // pub async fn mint_score_nft(&mut self) -> Result<String> {
+    //     if !self.game.is_game_over() {
+    //         return Err(GameError::InvalidMove);
+    //     }
 
-        let score = self.game.get_score();
-        self.web3.mint_score_nft(score).await
-            .map_err(|e| GameError::Web3Error(e.to_string()))
-    }
+    //     let score = self.game.get_score();
+    //     self.web3.mint_score_nft(score).await
+    //         .map_err(|e| GameError::Web3Error(e.to_string()))
+    // }
 
-    pub async fn connect_wallet(&mut self, address: String) -> Result<()> {
-        self.web3.connect_wallet(address).await
-            .map_err(|e| GameError::Web3Error(e.to_string()))
-    }
+    // pub async fn connect_wallet(&mut self, address: String) -> Result<()> {
+    //     self.web3.connect_wallet(address).await
+    //         .map_err(|e| GameError::Web3Error(e.to_string()))
+    // }
 
-    pub fn get_wallet_address(&self) -> Option<String> {
-        self.web3.get_connected_address()
-    }
+    // pub fn get_wallet_address(&self) -> Option<String> {
+    //     self.web3.get_connected_address()
+    // }
 }
 
 #[cfg(test)]

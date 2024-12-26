@@ -1,8 +1,12 @@
-// bindings/android.rs
-use crate::{Game, Direction, GameError, Result};
+use crate::game::Direction;
+use crate::game::Game;
+
+#[cfg(feature = "android")]
 use jni::JNIEnv;
+#[cfg(feature = "android")]
 use jni::objects::{JClass, JString};
-use jni::sys::{jlong, jboolean, jobjectArray, jstring};
+#[cfg(feature = "android")]
+use jni::sys::{jlong, jboolean, jobjectArray};
 
 #[no_mangle]
 pub extern "system" fn Java_com_game2048_GameModule_initGame(
@@ -15,7 +19,7 @@ pub extern "system" fn Java_com_game2048_GameModule_initGame(
 
 #[no_mangle]
 pub extern "system" fn Java_com_game2048_GameModule_makeMove(
-    env: JNIEnv,
+    mut env: JNIEnv,
     _class: JClass,
     game_ptr: jlong,
     direction: JString,
@@ -23,10 +27,10 @@ pub extern "system" fn Java_com_game2048_GameModule_makeMove(
     let game = unsafe { &mut *(game_ptr as *mut Game) };
     
     let direction: String = env
-        .get_string(direction)
+        .get_string(&direction)
         .expect("Invalid direction string")
         .into();
-        
+    
     let direction = match direction.to_uppercase().as_str() {
         "UP" => Direction::Up,
         "DOWN" => Direction::Down,
@@ -40,7 +44,7 @@ pub extern "system" fn Java_com_game2048_GameModule_makeMove(
 
 #[no_mangle]
 pub extern "system" fn Java_com_game2048_GameModule_getBoard(
-    env: JNIEnv,
+    mut env: JNIEnv,
     _class: JClass,
     game_ptr: jlong,
 ) -> jobjectArray {
@@ -48,17 +52,25 @@ pub extern "system" fn Java_com_game2048_GameModule_getBoard(
     let board = game.get_board();
 
     // 创建一个 4x4 的二维数组
-    let array_class = env.find_class("[[I").expect("Failed to find array class");
-    let result = env.new_object_array(4, array_class, env.new_int_array(4).unwrap()).unwrap();
+    let array_class = env.find_class("[[I")
+        .expect("Failed to find array class");
+    let result = env.new_object_array(4, array_class, env.new_int_array(4).unwrap())
+        .expect("Failed to create object array");
 
     for i in 0..4 {
-        let row = env.new_int_array(4).unwrap();
+        let row = env.new_int_array(4)
+            .expect("Failed to create int array");
         let row_elements = board[i].iter().map(|&x| x as i32).collect::<Vec<i32>>();
-        env.set_int_array_region(row, 0, &row_elements).unwrap();
-        env.set_object_array_element(result, i as i32, row).unwrap();
+        
+        // 使用引用避免移动
+        env.set_int_array_region(&row, 0, &row_elements)
+            .expect("Failed to set array region");
+        env.set_object_array_element(&result, i as i32, &row)
+            .expect("Failed to set array element");
     }
 
-    result
+    // 将最终结果转换为 jobjectArray
+    result.into_raw()
 }
 
 #[no_mangle]
