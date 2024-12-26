@@ -1,0 +1,59 @@
+[package]
+name = "game2048_core"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "2048 game core with Web3 integration"
+
+[lib]
+name = "game2048_core"
+crate-type = ["staticlib", "cdylib"]
+
+[dependencies]
+# 序列化相关
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+rand = "0.8"
+
+# FFI 相关
+jni = { version = "0.21", optional = true }
+once_cell = "1.8"
+static_assertions = "1.1"
+
+# Web3 相关
+ethers = { version = "2.0", features = ["rustls"] }
+tokio = { version = "1.0", features = ["full"] }
+async-trait = "0.1"
+futures = "0.3"
+
+# 错误处理
+thiserror = "1.0"
+anyhow = "1.0"
+
+# 日志
+log = "0.4"
+env_logger = "0.10"
+
+[target.'cfg(target_os = "android")'.dependencies]
+jni = { version = "0.21", features = ["invocation"] }
+
+[dev-dependencies]
+criterion = "0.4"
+mockall = "0.11"
+tokio-test = "0.4"
+
+[features]
+default = []
+android = ["jni"]
+ios = []
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = 'abort'
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true

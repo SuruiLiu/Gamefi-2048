@@ -1,0 +1,93 @@
+# ---- Rust ----
+target/
+**/*.rs.bk
+Cargo.lock
+.cargo/.crates.toml
+.cargo/.crates2.json
+**/*.dSYM
+**/debug/
+**/release/
+*.rlib
+*.lock
+
+# ---- React Native ----
+node_modules/
+*.log
+*.lock
+*.env
+*.env.*
+.env.local
+.expo/
+.expo-shared/
+expo-debug/
+*.expo
+
+# ---- Build Artifacts ----
+dist/
+build/
+android/app/build/
+ios/build/
+android/.gradle/
+.gradle/
+*.apk
+*.aab
+
+# ---- IDE & Editor ----
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+*.swp
+.DS_Store
+*.iml
+Thumbs.db
+
+# ---- Android ----
+android/local.properties
+android/.settings/
+android/.cxx/
+android/cmake-build-debug/
+
+# ---- iOS ----
+ios/Pods/
+ios/.DS_Store
+ios/.swiftpm/
+ios/.build/
+ios/RustBindings/DerivedData/
+ios/RustBindings/*.xcodeproj/project.xcworkspace/
+ios/RustBindings/*.xcodeproj/xcuserdata/
+
+# ---- Web3 Specific ----
+.cache/
+*.keystore
+*.pem
+*.key
+*.crt
+
+# ---- Logs and Reports ----
+*.log
+*.out
+*.err
+*.pid
+
+# ---- Temporary Files ----
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.swp
+
+# ---- FFI Generated ----
+rust/src/bindings/*.h
+rust/src/bindings/*.o
+rust/src/bindings/*.a
+rust/src/bindings/*.so
+rust/src/bindings/*.dylib
+
+# ---- Misc ----
+!.gitkeep
+coverage/
+coverage-final.json
+.nyc_output/
+yarn-error.log
