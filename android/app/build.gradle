@@ -1,7 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: "kotlin-android"
-
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 android {
     namespace "com.game2048"
@@ -29,7 +26,8 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            minifyEnabled true
+            signingConfig signingConfigs.debug
+            minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -37,22 +35,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-
-    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
-    }
-
-    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
-    if (hermesEnabled.toBoolean()) {
-        implementation("com.facebook.react:hermes-android")
-    } else {
-        implementation jscFlavor
-    }
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

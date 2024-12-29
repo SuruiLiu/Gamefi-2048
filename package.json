@@ -2,14 +2,17 @@
   "name": "game2048",
   "version": "1.0.0",
   "private": true,
+  "resolutions": {
+    "@react-native-community/async-storage": "1.12.1"
+  },
   "scripts": {
+    "postinstall": "npm run build:rust",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "build:rust": "cd rust && cargo build --release",
     "test": "jest",
-    "lint": "eslint .",
-    "postinstall": "npm run build:rust"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.19.0",
@@ -17,6 +20,7 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
     "ethers": "^6.0.0",
+    "patch-package": "^8.0.0",
     "react": "18.2.0",
     "react-native": "^0.72.17",
     "react-native-gesture-handler": "^2.21.2",
@@ -40,6 +44,7 @@
     "eslint": "^8.19.0",
     "jest": "^29.2.1",
     "metro-react-native-babel-preset": "^0.76.5",
+    "postinstall-postinstall": "^2.1.0",
     "typescript": "^4.9.5"
   },
   "jest": {
