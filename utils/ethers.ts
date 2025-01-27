@@ -1,8 +1,8 @@
 import { BrowserProvider, Contract } from 'ethers';
-import { CONTRACT_ADDRESSES } from '../contracts/config';
-import { GAME_TOKEN_ABI } from '../contracts/abis/GameToken';
-import { GAME_NFT_ABI } from '../contracts/abis/GameNFT';
-import { MARKETPLACE_ABI } from '../contracts/abis/Marketplace';
+import { CONTRACT_ADDRESSES } from '../contracts-abi/config';
+import { GAME_TOKEN_ABI } from '../contracts-abi/abis/GameToken';
+import { GAME_NFT_ABI } from '../contracts-abi/abis/GameNFT';
+import { MARKETPLACE_ABI } from '../contracts-abi/abis/Marketplace';
 
 // Sepolia 网络 ID
 export const SEPOLIA_CHAIN_ID = 11155111;
@@ -153,7 +153,7 @@ export const disconnect = async () => {
     try {
       // 清除本地存储的连接状态
       localStorage.removeItem('walletConnected');
-      
+
       // 如果使用的是 MetaMask，直接清除连接状态
       if (window.ethereum.isMetaMask) {
         // 不再调用任何会触发连接请求的方法
