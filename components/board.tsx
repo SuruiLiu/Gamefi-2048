@@ -88,24 +88,15 @@ export default function Board({ onTabChange }: BoardProps) {
     };
   }, [handleKeyDown]);
 
-  if (status === "lost") {
+  if (status === "lost" || status === "ended") {
     return (
       <Splash
-        heading="Game Over!"
-        type="lost"
-        onTabChange={onTabChange}
-      />
-    );
-  }
-
-  if (status === "ended") {
-    return (
-      <Splash
-        heading="游戏结束!"
+        heading="Game End!"
         type="ended"
         maxScore={maxScore}
         gameEndTime={gameEndTime}
         onTabChange={onTabChange}
+        onReplay={startGame}
       />
     );
   }

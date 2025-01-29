@@ -49,7 +49,7 @@ export default function MarketplaceCard({ metadata, price, seller, type = 'buy',
   // 处理购买NFT
   const handleBuy = async () => {
     if (!metadata.id) {
-      toast.error('无效的NFT ID');
+      toast.error('Invalid NFT ID');
       return;
     }
 
@@ -59,7 +59,7 @@ export default function MarketplaceCard({ metadata, price, seller, type = 'buy',
       const tokenContract = await getGameTokenContract(signer);
       
       if (!marketplaceContract || !tokenContract) {
-        toast.error('合约初始化失败');
+        toast.error('Contract initialization failed');
         return;
       }
 
@@ -72,28 +72,28 @@ export default function MarketplaceCard({ metadata, price, seller, type = 'buy',
       if (currentAllowance < BigInt(price)) {
         // 如果授权额度不足，先进行授权
         const approveTx = await tokenContract.approve(marketplaceContract.target, price);
-        const approveToast = toast.loading('授权中...');
+        const approveToast = toast.loading('Approving...');
         await approveTx.wait();
         toast.dismiss(approveToast);
-        toast.success('授权成功！');
+        toast.success('Approve success！');
       }
 
       // 购买NFT
       const buyTx = await marketplaceContract.buyNFT(metadata.id);
-      const loadingToast = toast.loading('购买中...');
+      const loadingToast = toast.loading('Purchasing...');
       await buyTx.wait();
       toast.dismiss(loadingToast);
-      toast.success('购买成功！');
+      toast.success('Purchase success！');
       
       onSuccess?.();
     } catch (error: any) {
       console.error('购买失败:', error);
       if (error.code === 'ACTION_REJECTED') {
-        toast.error('用户取消交易');
+        toast.error('User cancelling transaction');
       } else if (error.code === 'INSUFFICIENT_FUNDS') {
-        toast.error('余额不足');
+        toast.error('Not sufficient Token');
       } else {
-        toast.error('购买失败: ' + (error.message || '未知错误'));
+        toast.error('Purchase failure: ' + (error.message || 'Undefined error'));
       }
     }
   };
@@ -101,7 +101,7 @@ export default function MarketplaceCard({ metadata, price, seller, type = 'buy',
   // 处理撤回NFT
   const handleWithdraw = async () => {
     if (!metadata.id) {
-      toast.error('无效的NFT ID');
+      toast.error('Invalid NFT ID');
       return;
     }
 
@@ -110,33 +110,34 @@ export default function MarketplaceCard({ metadata, price, seller, type = 'buy',
       const marketplaceContract = await getMarketplaceContract(signer);
       
       if (!marketplaceContract) {
-        toast.error('合约初始化失败');
+        toast.error('Contract initialization failed');
         return;
       }
 
       const unlistTx = await marketplaceContract.unlistNFT(metadata.id);
-      const loadingToast = toast.loading('撤回中...');
+      const loadingToast = toast.loading('Being withdrawn...');
       await unlistTx.wait();
       toast.dismiss(loadingToast);
-      toast.success('撤回成功！');
+      toast.success('Successful withdrawal!');
       
       onSuccess?.();
     } catch (error: any) {
       console.error('撤回失败:', error);
       if (error.code === 'ACTION_REJECTED') {
-        toast.error('用户取消交易');
+        toast.error('User cancelling transaction');
       } else {
-        toast.error('撤回失败: ' + (error.message || '未知错误'));
+        toast.error('Failure to withdraw: ' + (error.message || 'Undefined error'));
       }
     }
   };
+  const { name, image, attributes } = metadata;
+
+  const imageUrl = `https://ipfs.io/ipfs/${image.replace('ipfs://', '')}`;
 
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
-        {metadata.image && (
-          <img src={metadata.image} alt={metadata.name || 'NFT'} className={styles.image} />
-        )}
+        {image && <img src={imageUrl} alt={name || 'NFT'} className={styles.image} />}
       </div>
       <div className={styles.info}>
         <h3 className={styles.title}>{metadata.name || 'Unnamed NFT'}</h3>

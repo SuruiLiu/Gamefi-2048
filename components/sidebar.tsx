@@ -52,7 +52,7 @@ export default function Sidebar({ currentTab, onTabChange }: SidebarProps) {
   const checkConnection = async () => {
     try {
       if (!window.ethereum) {
-        console.error('MetaMask 未安装');
+        console.error('MetaMask is not installed');
         return;
       }
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
@@ -78,7 +78,7 @@ export default function Sidebar({ currentTab, onTabChange }: SidebarProps) {
   const connectWallet = async () => {
     try {
       if (!window.ethereum) {
-        toast.error('请安装 MetaMask');
+        toast.error('Please install MetaMask');
         return;
       }
       const accounts = await window.ethereum.request({
@@ -87,9 +87,9 @@ export default function Sidebar({ currentTab, onTabChange }: SidebarProps) {
       setAddress(accounts[0]);
     } catch (error: any) {
       if (error.code === 4001) {
-        toast.error('请连接钱包以继续');
+        toast.error('Please connect your wallet to continue');
       } else {
-        toast.error('连接钱包失败');
+        toast.error('Wallet connection failure');
       }
     }
   };
@@ -129,23 +129,23 @@ export default function Sidebar({ currentTab, onTabChange }: SidebarProps) {
       const signer = await getSigner();
       const contract = await getGameTokenContract(signer);
       if (!contract) {
-        toast.error('合约初始化失败');
+        toast.error('Contract initialization failed');
         return;
       }
 
       const tx = await contract.checkAndAirdrop(address);
-      const loadingToast = toast.loading('领取中...');
+      const loadingToast = toast.loading('Claiming...');
       await tx.wait();
       toast.dismiss(loadingToast);
 
-      toast.success('领取成功！');
+      toast.success('Claim success!');
       setCanClaim(false);
       void updateBalance();
     } catch (error: any) {
       if (error.code === 'ACTION_REJECTED') {
-        toast.error('用户取消交易');
+        toast.error('User cancelling transaction');
       } else {
-        toast.error('领取失败: ' + (error.message || '未知错误'));
+        toast.error('Claim failure: ' + (error.message || 'Undefined error'));
       }
     } finally {
       setIsLoading(false);

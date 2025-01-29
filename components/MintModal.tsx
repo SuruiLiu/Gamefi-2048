@@ -19,7 +19,7 @@ export default function MintModal({ isOpen, onClose, onSuccess }: MintModalProps
       const contract = await getGameNFTContract(signer);
       
       if (!contract) {
-        toast.error('合约初始化失败');
+        toast.error('Contract initialization failed');
         return;
       }
 
@@ -28,19 +28,19 @@ export default function MintModal({ isOpen, onClose, onSuccess }: MintModalProps
       const highestTile = 2048; // 示例值
 
       const tx = await contract.mint(highestTile, timestamp);
-      const loadingToast = toast.loading('铸造中...');
+      const loadingToast = toast.loading('Minting...');
       await tx.wait();
       toast.dismiss(loadingToast);
       
-      toast.success('NFT 铸造成功！');
+      toast.success('NFT mint success！');
       onSuccess?.();
       onClose();
     } catch (error: any) {
       console.error('Error minting NFT:', error);
       if (error.code === 'ACTION_REJECTED') {
-        toast.error('用户取消交易');
+        toast.error('User cancelling transaction');
       } else {
-        toast.error('铸造失败: ' + (error.message || '未知错误'));
+        toast.error('Mint fail: ' + (error.message || 'Undefined error'));
       }
     } finally {
       setIsLoading(false);
@@ -53,12 +53,12 @@ export default function MintModal({ isOpen, onClose, onSuccess }: MintModalProps
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
-          <h2>铸造 NFT</h2>
+          <h2>Mint NFT</h2>
           <button className={styles.closeButton} onClick={onClose}>×</button>
         </div>
         <div className={styles.modalContent}>
           <p>
-            确认要铸造 NFT 吗？这将消耗你的游戏代币。
+          Are you sure to Mint NFT? This will cost your game tokens。
           </p>
           <div className={styles.buttonContainer}>
             <button
@@ -66,14 +66,14 @@ export default function MintModal({ isOpen, onClose, onSuccess }: MintModalProps
               disabled={isLoading}
               className={styles.mintButton}
             >
-              {isLoading ? '铸造中...' : '确认铸造'}
+              {isLoading ? 'Minting...' : 'Confirmed minting'}
             </button>
             <button
               onClick={onClose}
               disabled={isLoading}
               className={styles.cancelButton}
             >
-              取消
+              Cancel
             </button>
           </div>
         </div>

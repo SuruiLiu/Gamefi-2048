@@ -69,8 +69,24 @@ export default function GameProvider({ children }: PropsWithChildren) {
 
   const startGame = () => {
     dispatch({ type: "reset_game" });
-    dispatch({ type: "create_tile", tile: { position: [0, 1], value: 2 } });
-    dispatch({ type: "create_tile", tile: { position: [0, 2], value: 2 } });
+
+    const emptyCells = getEmptyCells();
+    if (emptyCells.length < 2) return; // 确保至少有两个空位
+
+    // 随机选择两个不同的位置
+    const firstIndex = Math.floor(Math.random() * emptyCells.length);
+    let secondIndex;
+    do {
+      secondIndex = Math.floor(Math.random() * emptyCells.length);
+    } while (secondIndex === firstIndex);
+
+    // 随机选择两个值，确保至少有一个是2
+    const firstValue = Math.random() < 0.5 ? 2 : 4;
+    const secondValue = firstValue === 2 ? (Math.random() < 0.5 ? 2 : 4) : 2;
+
+    // 创建两个tile
+    dispatch({ type: "create_tile", tile: { position: emptyCells[firstIndex], value: firstValue } });
+    dispatch({ type: "create_tile", tile: { position: emptyCells[secondIndex], value: secondValue } });
   };
 
   const checkGameState = () => {
@@ -97,7 +113,7 @@ export default function GameProvider({ children }: PropsWithChildren) {
       }
     }
 
-    dispatch({ type: "update_status", status: "lost" });
+      dispatch({ type: "update_status", status: "lost", maxScore: gameState.score });
   };
 
   const endGame = useCallback(() => {

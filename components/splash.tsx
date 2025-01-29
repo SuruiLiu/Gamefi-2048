@@ -10,15 +10,16 @@ interface SplashProps {
   maxScore?: number;
   gameEndTime?: string;
   onTabChange?: (tab: 'game' | 'marketplace' | 'profile') => void;
+  onReplay?: () => void;
 }
 
-export default function Splash({ heading, type, maxScore, gameEndTime, onTabChange }: SplashProps) {
+export default function Splash({ heading, type, maxScore, gameEndTime, onTabChange, onReplay }: SplashProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { startGame } = useContext(GameContext);
 
   const handleMintNFT = async () => {
     if (typeof window.ethereum === 'undefined') {
-      toast.error('请先安装 MetaMask');
+      toast.error('Please install MetaMask first');
       return;
     }
 
@@ -27,7 +28,7 @@ export default function Splash({ heading, type, maxScore, gameEndTime, onTabChan
       const accounts = await provider.send('eth_accounts', []);
       
       if (accounts.length === 0) {
-        toast.error('请先连接钱包');
+        toast.error('Please connect your wallet first');
         return;
       }
 
@@ -35,7 +36,7 @@ export default function Splash({ heading, type, maxScore, gameEndTime, onTabChan
       
       const networkSwitched = await checkAndSwitchNetwork();
       if (!networkSwitched) {
-        toast.error('请切换到正确的网络');
+        toast.error('Switch to the correct network');
         return;
       }
 
@@ -44,7 +45,7 @@ export default function Splash({ heading, type, maxScore, gameEndTime, onTabChan
       const tokenContract = await getGameTokenContract(signer);
 
       if (!nftContract || !tokenContract) {
-        toast.error('合约初始化失败');
+        toast.error('Contract initialization failed');
         return;
       }
       
@@ -57,21 +58,24 @@ export default function Splash({ heading, type, maxScore, gameEndTime, onTabChan
         mintPrice  // 授权金额
       );
       
-      const approveToast = toast.loading('正在授权 GameToken...');
+      const approveToast = toast.loading('Approving GameToken...');
       await approveTx.wait();
+      console.log('Approve success！')
       toast.dismiss(approveToast);
-      toast.success('授权成功！');
+      toast.success('Approve success！');
 
-      const score = Number(maxScore) || 0;
-      const timestamp = gameEndTime || new Date().toLocaleString();
+      const score = BigInt(maxScore || 0);
+      const timestamp = Math.floor(Date.now() / 1000).toString();
+      console.log(score,timestamp);
       
       const tx = await nftContract.mint(
         score,  // 游戏得分
-        timestamp    // 时间戳
+        timestamp,    // 时间戳
       );
 
       const mintingToast = toast.loading('Minting NFT...');
-      await tx.wait();
+      const receipt = await tx.wait();
+      console.log('Transaction receipt:', receipt);
       toast.dismiss(mintingToast);
       toast.success('NFT Minted Successfully!');
       
@@ -83,9 +87,9 @@ export default function Splash({ heading, type, maxScore, gameEndTime, onTabChan
     } catch (error: any) {
       console.error('Error minting NFT:', error);
       if (error.code === 'ACTION_REJECTED') {
-        toast.error('用户取消交易');
+        toast.error('User cancelling transaction');
       } else {
-        toast.error('Mint 失败: ' + error.message);
+        toast.error('Mint fail: ' + error.message);
       }
     } finally {
       setIsLoading(false);
@@ -95,11 +99,11 @@ export default function Splash({ heading, type, maxScore, gameEndTime, onTabChan
   return (
     <div className={styles.splash}>
       <div className={styles.content}>
-        <h2>{type === "lost" ? "Game Over!" : "游戏结束!"}</h2>
+        <h2>{type === "lost" ? "Game Over!" : "Game end!"}</h2>
         {type === "ended" && (
           <>
-            <p className={styles.score}>游戏得分: {maxScore}</p>
-            <p className={styles.time}>结束时间: {gameEndTime}</p>
+            <p className={styles.score}>Game score: {maxScore}</p>
+            <p className={styles.time}>End Game: {gameEndTime}</p>
             <div className={styles.buttonGroup}>
               <button 
                 className={styles.mintButton}
@@ -110,7 +114,7 @@ export default function Splash({ heading, type, maxScore, gameEndTime, onTabChan
               </button>
               <button 
                 className={styles.replayButton}
-                onClick={startGame}
+                onClick={onReplay || startGame}
               >
                 Replay
               </button>

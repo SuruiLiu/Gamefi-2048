@@ -42,7 +42,7 @@ export default function ListNFTModal({ isOpen, onClose, onSuccess }: ListNFTModa
       const marketplaceContract = await getMarketplaceContract(provider);
 
       if (!nftContract || !marketplaceContract) {
-        toast.error('合约初始化失败');
+        toast.error('Contract initialization failed');
         return;
       }
 
@@ -84,14 +84,14 @@ export default function ListNFTModal({ isOpen, onClose, onSuccess }: ListNFTModa
       const availableNFTs = nfts.filter((nft): nft is NFTOption => nft !== null);
       setOwnedNFTs(availableNFTs);
     } catch (error) {
-      toast.error('获取NFT失败');
+      toast.error('Fail to get NFT');
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedNFT || !price) {
-      toast.error('请填写完整信息');
+      toast.error('Please fill in the complete information');
       return;
     }
 
@@ -102,7 +102,7 @@ export default function ListNFTModal({ isOpen, onClose, onSuccess }: ListNFTModa
       const marketplaceContract = await getMarketplaceContract(signer);
 
       if (!nftContract || !marketplaceContract) {
-        toast.error('合约初始化失败');
+        toast.error('Contract initialization failed');
         return;
       }
 
@@ -115,28 +115,28 @@ export default function ListNFTModal({ isOpen, onClose, onSuccess }: ListNFTModa
 
       if (approvedAddressStr !== marketplaceAddressStr) {
         const approveTx = await nftContract.approve(marketplaceContract.target, selectedNFT);
-        const loadingToast = toast.loading('授权中...');
+        const loadingToast = toast.loading('Approving...');
         await approveTx.wait();
         toast.dismiss(loadingToast);
-        toast.success('授权成功！');
+        toast.success('Approve success');
       }
 
       const priceInWei = ethers.parseUnits(price, 18);
       const listTx = await marketplaceContract.listNFT(selectedNFT, priceInWei);
-      const loadingToast = toast.loading('上架中...');
+      const loadingToast = toast.loading('Listing...');
       await listTx.wait();
       toast.dismiss(loadingToast);
 
-      toast.success('上架成功！');
+      toast.success('List success！');
       await fetchUserNFTs();
       onSuccess?.();
       onClose();
     } catch (error: any) {
-      console.error('上架失败:', error);
+      console.error('List fail:', error);
       if (error.code === 'ACTION_REJECTED') {
         toast.error('用户取消交易');
       } else {
-        toast.error('上架失败: ' + (error.message || '未知错误'));
+        toast.error('List fail: ' + (error.message || 'Undefined error'));
       }
     } finally {
       setIsLoading(false);

@@ -11,51 +11,51 @@
   }
 }
 
-.twenty48 > header {
+.twenty48>header {
   display: flex;
   align-items: center;
   margin: calc(var(--pixel-size) * 1) calc(var(--pixel-size) * 0);
 }
 
-.twenty48 > header > * {
+.twenty48>header>* {
   flex: 1;
 }
 
-.twenty48 > footer {
+.twenty48>footer {
   margin: calc(var(--pixel-size) * 3) calc(var(--pixel-size) * 0);
   font-weight: 600;
   text-align: center;
 }
 
-.twenty48 > footer > .socials {
+.twenty48>footer>.socials {
   display: flex;
   justify-content: center;
   margin-bottom: calc(var(--pixel-size) * 2);
 }
 
-.twenty48 > footer > .socials > a > img {
+.twenty48>footer>.socials>a>img {
   vertical-align: middle;
   margin: calc(var(--pixel-size) * 0.5);
 }
 
 @media (min-width: 512px) {
-  .twenty48 > footer {
+  .twenty48>footer {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     text-align: left;
   }
 
-  .twenty48 > footer > div {
+  .twenty48>footer>div {
     width: 100%;
   }
 
-  .twenty48 > footer > .socials {
+  .twenty48>footer>.socials {
     justify-content: right;
     margin-bottom: calc(var(--pixel-size) * 0);
   }
 
-  .twenty48 > footer > .socials > a > img:last-child {
+  .twenty48>footer>.socials>a>img:last-child {
     margin: calc(var(--pixel-size) * 1);
     margin-right: calc(var(--pixel-size) * 0);
   }
@@ -69,7 +69,7 @@
 
 .content {
   flex: 1;
-  padding: 24px;
+  padding: 2px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -78,14 +78,14 @@
 .gameContainer {
   max-width: 600px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 2px;
 }
 
 .gameHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   flex-wrap: wrap;
   gap: 16px;
 }
@@ -152,4 +152,3 @@
     padding: 24px;
   }
 }
-

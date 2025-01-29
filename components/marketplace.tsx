@@ -78,7 +78,7 @@ export default function Marketplace() {
       const provider = getProvider();
       const marketplaceContract = await getMarketplaceContract(provider);
       const nftContract = await getGameNFTContract(provider);
-      
+
       if (!marketplaceContract || !nftContract) {
         console.error('Failed to create contracts');
         setListedNFTs([]);
@@ -87,12 +87,12 @@ export default function Marketplace() {
 
       // 获取所有上架的NFT
       const [tokenIds, sellers, prices] = await marketplaceContract.getAllListedNFTs();
-      
+
       if (!tokenIds || !sellers || !prices || tokenIds.length === 0) {
         setListedNFTs([]);
         return;
       }
-      
+
       // 获取每个NFT的元数据
       const nftPromises = tokenIds.map(async (tokenId: bigint, index: number) => {
         try {
@@ -101,7 +101,7 @@ export default function Marketplace() {
             console.error(`No tokenURI for token ${tokenId}`);
             return null;
           }
-          
+
           const metadata = parseTokenURI(tokenURI);
           if (metadata && typeof metadata === 'object') {
             return {
@@ -120,12 +120,12 @@ export default function Marketplace() {
       });
 
       const results = await Promise.all(nftPromises);
-      const validNFTs = results.filter((nft): nft is ListedNFT => 
-        nft !== null && 
-        nft.metadata && 
-        typeof nft.metadata.id === 'string' && 
-        typeof nft.metadata.name === 'string' && 
-        typeof nft.metadata.image === 'string' && 
+      const validNFTs = results.filter((nft): nft is ListedNFT =>
+        nft !== null &&
+        nft.metadata &&
+        typeof nft.metadata.id === 'string' &&
+        typeof nft.metadata.name === 'string' &&
+        typeof nft.metadata.image === 'string' &&
         Array.isArray(nft.metadata.attributes) &&
         typeof nft.price === 'string' &&
         typeof nft.seller === 'string'
@@ -168,16 +168,16 @@ export default function Marketplace() {
           className={`${styles.listingButton} ${activeListingType === 'selling' ? styles.active : ''}`}
           onClick={() => setActiveListingType('selling')}
         >
-          正在售卖
+          On sale
         </button>
         <button
           className={`${styles.listingButton} ${activeListingType === 'my-listings' ? styles.active : ''}`}
           onClick={() => setActiveListingType('my-listings')}
         >
-          我的售卖
+          My sale
         </button>
       </div>
-      
+
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.searchBar}>
@@ -189,7 +189,7 @@ export default function Marketplace() {
               className={styles.searchInput}
             />
           </div>
-          <button 
+          <button
             className={styles.addButton}
             onClick={() => {
               if (!currentAddress) {
@@ -224,7 +224,7 @@ export default function Marketplace() {
         )}
       </div>
 
-      <ListNFTModal 
+      <ListNFTModal
         isOpen={showModal}
         onClose={() => {
           console.log('Marketplace - 关闭模态框');

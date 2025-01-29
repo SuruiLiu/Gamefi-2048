@@ -300,11 +300,11 @@ export default function gameReducer(
     case "reset_game":
       return initialState;
     case "update_status": {
-      if (action.status === "ended" && action.maxScore !== undefined) {
+      if ((action.status === "lost" || action.status === "ended") && action.maxScore !== undefined) {
         return {
           ...state,
           status: action.status,
-          maxScore: action.maxScore,
+          maxScore: Math.max(action.maxScore || 0, state.maxScore),
           gameEndTime: new Date().toLocaleString()
         };
       }

@@ -6,6 +6,10 @@ import { MARKETPLACE_ABI } from '../contracts-abi/abis/Marketplace';
 
 // Sepolia 网络 ID
 export const SEPOLIA_CHAIN_ID = 11155111;
+export const TELOS_CHAIN_ID = 41;
+
+// 添加Avalanche Fuji网络 ID
+export const AVALANCHE_FUJI_CHAIN_ID = 43113;
 
 // 检查钱包是否已连接
 export const isWalletConnected = async () => {
@@ -88,35 +92,36 @@ export const getMarketplaceContract = async (providerOrSigner: any) => {
   }
 };
 
-// 检查并切换网络
+// 检查并切换到Telos网络
 export const checkAndSwitchNetwork = async () => {
   try {
     if (!window.ethereum) return false;
 
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    if (parseInt(chainId) !== SEPOLIA_CHAIN_ID) {
+    if (parseInt(chainId) !== TELOS_CHAIN_ID && parseInt(chainId) !== AVALANCHE_FUJI_CHAIN_ID) {
       try {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: `0x${SEPOLIA_CHAIN_ID.toString(16)}` }],
+          params: [{ chainId: `0x${AVALANCHE_FUJI_CHAIN_ID.toString(16)}` }],
         });
         return true;
       } catch (error: any) {
         if (error.code === 4902) {
+          // 如果网络不存在，添加网络
           try {
             await window.ethereum.request({
               method: 'wallet_addEthereumChain',
               params: [
                 {
-                  chainId: `0x${SEPOLIA_CHAIN_ID.toString(16)}`,
-                  chainName: 'Sepolia',
+                  chainId: `0x${AVALANCHE_FUJI_CHAIN_ID.toString(16)}`,
+                  chainName: 'Avalanche Fuji Testnet',
                   nativeCurrency: {
-                    name: 'ETH',
-                    symbol: 'ETH',
+                    name: 'AVAX',
+                    symbol: 'AVAX',
                     decimals: 18,
                   },
-                  rpcUrls: ['https://sepolia.infura.io/v3/'],
-                  blockExplorerUrls: ['https://sepolia.etherscan.io/'],
+                  rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+                  blockExplorerUrls: ['https://testnet.snowtrace.io'],
                 },
               ],
             });
@@ -164,4 +169,8 @@ export const disconnect = async () => {
       console.error('Error disconnecting wallet:', error);
     }
   }
-}; 
+};
+
+// 使用示例
+// 确保在应用启动时调用此函数
+checkAndSwitchNetwork(); 

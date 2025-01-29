@@ -2,13 +2,15 @@
 
 [English](README.md) | [中文](README_CN.md)
 
-一个基于区块链的 2048 游戏，集成了 NFT 铸造和交易市场功能，玩家可以将游戏成就铸造为 NFT 并在市场上交易。
+一个基于区块链的 2048 游戏，集成了 NFT 铸造和交易市场功能，玩家可以将游戏成就铸造为 NFT 并在市场上交易。现在支持多个网络，包括 Sepolia、Telos 测试网和 Avalanche Fuji，独特的 NFT 设计存储在 IPFS 上。
 
 ## 功能特点
 
 - 🎮 经典的 2048 游戏玩法
-- 🎨 游戏成就 NFT 铸造系统
+- 🎨 游戏成就 NFT 铸造系统，具有独特设计
 - 💰 NFT 交易市场
+- 🌐 多网络支持：Sepolia、Telos 测试网、Avalanche Fuji
+- 🖼️ NFT 图片存储在 IPFS 上
 - 🎁 每日空投代币奖励
 - 📱 响应式设计，支持移动端
 - 🔗 基于以太坊的智能合约
@@ -75,6 +77,22 @@ Gamefi-2048/
 - GameToken: `0x5d768b72b6a41cB84B021A169E0B77a7b6b06f49`
 - GameNFT: `0x37eAD756497bBc8e69a16DC260FaB698309b0067`
 - Marketplace: `0x3045e820CcF4059cE1747F033e8D6246F43850dB`
+
+### Telos 测试网
+- GameToken: `0x09421D4e8594D3B19ABFc9c1C44096fa3BaAB6e1`
+- GameNFT: `0x459287afB0daf7e7FDCcA4bda08C8a5bd0BfE230`
+- Marketplace: `0x60cda54041199A7Fa74738053F6D78527A9120c6`
+
+### Avalanche Fuji
+- GameToken: `0x4A3Ec63705BB4BCcBaFcabfD8D7B6e9986082489`
+- GameNFT: `0x63F6082C3B8193d43EE146d790DF30925442B645`
+- Marketplace: `0x459287afB0daf7e7FDCcA4bda08C8a5bd0BfE230`
+
+### NFT 图片
+- 传奇: `https://ipfs.io/ipfs/bafybeicc4xossvnz3acndhqw4zcs4xa2xgiyotpvb3ptishm75qtyeszwq`
+- 史诗: `https://ipfs.io/ipfs/bafybeifh6ifdof7mee7rqkw355tnxh2qrlu2nudze7dhbbxeqcvpuele7q`
+- 稀有: `https://ipfs.io/ipfs/bafybeiaf3fy7r2evvqlhqqpbwla3lsurie2h6cwanalp7fzpxn3cq7pwgy`
+- 普通: `https://ipfs.io/ipfs/bafybeighwgusfefm23avzsxpaqbkacrqmywfunx3lx3nywmf23uwxvb45i`
 
 您可以从以下水龙头获取 Sepolia 测试币：
 - [Sepolia 水龙头](https://www.alchemy.com/faucets/ethereum-sepolia)
