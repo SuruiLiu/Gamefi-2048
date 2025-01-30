@@ -31,10 +31,10 @@ export default function Profile() {
       // 解码base64数据
       const jsonString = atob(base64Data);
       console.log('Decoded JSON string:', jsonString); // 调试用
-      
+
       // 清理JSON字符串中的控制字符
       const cleanJsonString = jsonString.replace(/[\x00-\x1F\x7F-\x9F]/g, '');
-      
+
       // 解析JSON
       return JSON.parse(cleanJsonString);
     } catch (error) {
@@ -65,33 +65,33 @@ export default function Profile() {
     try {
       const provider = getProvider();
       const nftContract = await getGameNFTContract(provider);
-      
+
       if (!nftContract) {
         console.error('Failed to create GameNFT contract');
         return;
       }
-      
+
       // 获取用户拥有的所有token ID
       const tokenIds = await nftContract.getUserTokens(userAddress);
       console.log('Token IDs:', tokenIds); // 调试用
-      
+
       if (!tokenIds || tokenIds.length === 0) {
         setNfts([]);
         return;
       }
-      
+
       // 获取每个NFT的元数据
       const nftMetadata = await Promise.all(
         tokenIds.map(async (tokenId: bigint) => {
           try {
             const tokenURI = await nftContract.tokenURI(tokenId);
             console.log(`TokenURI for ID ${tokenId}:`, tokenURI); // 调试用
-            
+
             if (!tokenURI) {
               console.error(`No tokenURI for token ${tokenId}`);
               return null;
             }
-            
+
             const metadata = parseTokenURI(tokenURI);
             if (metadata) {
               return {
@@ -105,7 +105,7 @@ export default function Profile() {
           return null;
         })
       );
-      
+
       // 过滤掉null值并设置状态
       const validMetadata = nftMetadata.filter((metadata): metadata is NFTMetadata => metadata !== null);
       console.log('Valid metadata:', validMetadata); // 调试用
@@ -122,7 +122,7 @@ export default function Profile() {
         try {
           const provider = getProvider();
           const accounts = await provider.send('eth_accounts', []);
-          
+
           if (accounts.length > 0) {
             // 检查网络
             const networkSwitched = await checkAndSwitchNetwork();
@@ -134,7 +134,7 @@ export default function Profile() {
             // 初始化合约
             const tokenContract = await getGameTokenContract(provider);
             const nftContract = await getGameNFTContract(provider);
-            
+
             if (!tokenContract || !nftContract) {
               console.error('合约初始化失败');
               return;
@@ -144,7 +144,7 @@ export default function Profile() {
             setIsConnected(true);
             setShowOverlay(false);
             setIsLoading(true);
-            
+
             // 获取代币余额
             await fetchBalance(accounts[0]);
             // 获取NFT数据
@@ -179,7 +179,7 @@ export default function Profile() {
         const provider = getProvider();
         const tokenContract = await getGameTokenContract(provider);
         const nftContract = await getGameNFTContract(provider);
-        
+
         if (!tokenContract || !nftContract) {
           console.error('合约初始化失败');
           return;
@@ -243,7 +243,7 @@ export default function Profile() {
       {!isConnected && showOverlay && (
         <div className={styles.overlay} onClick={() => setShowOverlay(false)}>
           <div className={styles.connectMessage}>
-            请先连接钱包
+            Please connect your wallet first
           </div>
         </div>
       )}

@@ -193,7 +193,7 @@ export default function Marketplace() {
             className={styles.addButton}
             onClick={() => {
               if (!currentAddress) {
-                toast.error('请先连接钱包');
+                toast.error('Please connect your wallet first');
                 return;
               }
               setShowModal(true);
